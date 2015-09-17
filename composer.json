@@ -15,10 +15,10 @@
     }
   },
   "require": {
-    "php": ">=5.3.3",
+    "php": ">=5.4.0",
     "google/recaptcha": "~1.1",
-    "zendframework/zend-http": "2.5.3",
-    "zendframework/zend-captcha": "2.5.1",
-    "zendframework/zend-form": "2.5.2"
+    "zendframework/zend-http": ">=2.5.0",
+    "zendframework/zend-captcha": ">=2.5.0",
+    "zendframework/zend-form": ">=2.5.0"
   }
 }
