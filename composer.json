@@ -1,0 +1,21 @@
+{
+  "name": "srggroup/zf2nocaptcha",
+  "description": "Google NoCaptcha for ZendFramework2",
+  "type": "library",
+  "keywords": [
+    "zf2",
+    "recaptcha",
+    "nocaptcha"
+  ],
+  "homepage": "http://srg.hu/",
+  "license": "BSD-3-Clause",
+  "autoload": {
+    "psr-0": {
+      "NoCaptcha\\": "library/"
+    }
+  },
+  "require": {
+    "php": ">=5.3.3",
+    "google/recaptcha": "~1.1"
+  }
+}
