@@ -20,3 +20,6 @@ composer require srggroup/zf2nocaptcha
 ```
 $adapter = new \NoCaptcha\NoCaptchaAdapter($siteKey, $secreteKey);
 ```
+
+
+I've used some code from this repository: https://github.com/szmnmichalowski/ZF2-NoCaptcha
