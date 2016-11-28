@@ -83,6 +83,7 @@ class NoCaptchaHelper extends FormInput
 		$attributes = $this->createAttributesString(array(
 			'id' =>  $id,
 			'name' => $name,
+            'class' => 'recaptchaResponse',
 		));
 
 		return sprintf($pattern, $attributes, $closingBracket);
