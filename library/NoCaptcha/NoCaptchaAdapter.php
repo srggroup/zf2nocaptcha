@@ -49,6 +49,11 @@ class NoCaptchaAdapter extends AbstractAdapter
 	protected $callback = 'recaptchaCallback';
 
 	/**
+	 * @var boolean Invisible ReCaptcha, or v2
+	 */
+	protected $invisible = false;
+
+	/**
 	 * See the different options on https://developers.google.com/recaptcha/docs/display
 	 *
 	 * @var array
@@ -251,5 +256,21 @@ class NoCaptchaAdapter extends AbstractAdapter
 	{
 		return 'recaptcha.helper';
 	}
-
+	
+	/**
+	 * Check if invisible recaptcha
+	 * @return bool
+	 */
+	public function isInvisible() {
+		return $this->invisible;
+	}
+	
+	/**
+	 * Set invisible flag
+	 * @param bool $invisible
+	 */
+	public function setInvisible($invisible){
+		$this->invisible = $invisible;
+	}
+	
 }

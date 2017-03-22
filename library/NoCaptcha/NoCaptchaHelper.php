@@ -50,21 +50,29 @@ class NoCaptchaHelper extends FormInput
 
 		$name = $element->getName();
 		$id = $element->getAttribute('id') ? $element->getAttribute('id') : $name;
+		$id .= '_'.uniqid(); //Generate unique ID for field
 
 		$captchaPattern = '<div %s></div>';
-
-		$captchaAttributes = $this->createAttributesString(array(
+		
+		$captchaAttributes = [
 			'class' => 'g-recaptcha '.$element->getAttribute('class'),
 			'data-sitekey' => $captcha->getSiteKey(),
 			'data-theme' => $captcha->getTheme(),
 			'data-type' => $captcha->getType(),
 			'data-callback' => $captcha->getCallback(),
-		));
+			'id' => $id
+		];
+		
+		//Invisible recaptcha support
+		if($captcha->isInvisible()){
+			$captchaAttributes['data-size'] = 'invisible';
+		}
+		$captchaAttributes = $this->createAttributesString($captchaAttributes);
 
 
 		$captchaElement = sprintf($captchaPattern, $captchaAttributes);
-		$input = $this->renderHiddenInput($id, $name);
-		$js = $this->renderJsCallback($captcha->getCallback(), $id);
+		$input = $this->renderHiddenInput($id.'_input', $name);
+		$js = $this->renderJsCallback($captcha->getCallback(), $id.'_input');
 
 		return $captchaElement . $input . $js;
 	}
