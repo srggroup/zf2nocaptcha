@@ -17,8 +17,8 @@
   "require": {
     "php": ">=5.4.0",
     "google/recaptcha": "~1.1",
-    "laminas/http": ">=2.5.0",
-    "laminas/captcha": ">=2.5.0",
-    "laminas/form": ">=2.5.0"
+    "laminas/laminas-http": ">=2.5.0",
+    "laminas/laminas-captcha": ">=2.5.0",
+    "laminas/laminas-form": ">=2.5.0"
   }
 }
