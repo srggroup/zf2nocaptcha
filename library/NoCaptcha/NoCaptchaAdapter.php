@@ -2,7 +2,7 @@
 namespace NoCaptcha;
 
 use ReCaptcha\ReCaptcha;
-use Zend\Captcha\AbstractAdapter;
+use Laminas\Captcha\AbstractAdapter;
 
 
 /**
@@ -256,7 +256,7 @@ class NoCaptchaAdapter extends AbstractAdapter
 	{
 		return 'recaptcha.helper';
 	}
-	
+
 	/**
 	 * Check if invisible recaptcha
 	 * @return bool
@@ -264,7 +264,7 @@ class NoCaptchaAdapter extends AbstractAdapter
 	public function isInvisible() {
 		return $this->invisible;
 	}
-	
+
 	/**
 	 * Set invisible flag
 	 * @param bool $invisible
@@ -272,5 +272,5 @@ class NoCaptchaAdapter extends AbstractAdapter
 	public function setInvisible($invisible){
 		$this->invisible = $invisible;
 	}
-	
+
 }

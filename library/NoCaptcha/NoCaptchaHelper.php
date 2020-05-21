@@ -1,10 +1,10 @@
 <?php
 namespace NoCaptcha;
 
-use Zend\Captcha\AdapterInterface;
-use Zend\Form\View\Helper\FormInput;
-use Zend\Form\ElementInterface;
-use Zend\Form\Exception;
+use Laminas\Captcha\AdapterInterface;
+use Laminas\Form\View\Helper\FormInput;
+use Laminas\Form\ElementInterface;
+use Laminas\Form\Exception;
 
 
 /**
@@ -43,7 +43,7 @@ class NoCaptchaHelper extends FormInput
 
 		if ($captcha === null || !$captcha instanceof AdapterInterface) {
 			throw new Exception\DomainException(sprintf(
-				'%s requires that the element has a "captcha" attribute implementing Zend\Captcha\AdapterInterface',
+				'%s requires that the element has a "captcha" attribute implementing Laminas\Captcha\AdapterInterface',
 				__METHOD__
 			));
 		}
@@ -53,7 +53,7 @@ class NoCaptchaHelper extends FormInput
 		$id .= '_'.uniqid(); //Generate unique ID for field
 
 		$captchaPattern = '<div %s></div>';
-		
+
 		$captchaAttributes = [
 			'class' => 'g-recaptcha '.$element->getAttribute('class'),
 			'data-sitekey' => $captcha->getSiteKey(),
@@ -62,7 +62,7 @@ class NoCaptchaHelper extends FormInput
 			'data-callback' => $captcha->getCallback(),
 			'id' => $id
 		];
-		
+
 		//Invisible recaptcha support
 		if($captcha->isInvisible()){
 			$captchaAttributes['data-size'] = 'invisible';

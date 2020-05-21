@@ -1,6 +1,6 @@
 # ZF2NoCaptcha
 
-This ZendFramework2 Captcha adapter uses Google's reCAPTCHA php library (see here: https://github.com/google/recaptcha).
+This Laminas Captcha adapter uses Google's reCAPTCHA php library (see here: https://github.com/google/recaptcha).
 
 ##USAGE
 
@@ -8,7 +8,7 @@ This ZendFramework2 Captcha adapter uses Google's reCAPTCHA php library (see her
 ```
 composer require srggroup/zf2nocaptcha
 ```
-* Define the helper in your zend module config: 
+* Define the helper in your Laminas module config: 
 ```
 'view_helpers'=>array(
 	'invokables'=>array(
@@ -16,7 +16,7 @@ composer require srggroup/zf2nocaptcha
 	)
 )
 ```
-* Integrate it into the form like the standard zend recaptcha element
+* Integrate it into the form like the standard laminas recaptcha element
 ```
 $adapter = new \NoCaptcha\NoCaptchaAdapter($siteKey, $secreteKey);
 ```

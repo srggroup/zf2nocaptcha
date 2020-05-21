@@ -1,6 +1,6 @@
 {
   "name": "srggroup/zf2nocaptcha",
-  "description": "Google NoCaptcha for ZendFramework2",
+  "description": "Google NoCaptcha for Laminas",
   "type": "library",
   "keywords": [
     "zf2",
@@ -17,8 +17,8 @@
   "require": {
     "php": ">=5.4.0",
     "google/recaptcha": "~1.1",
-    "zendframework/zend-http": ">=2.5.0",
-    "zendframework/zend-captcha": ">=2.5.0",
-    "zendframework/zend-form": ">=2.5.0"
+    "laminas/http": ">=2.5.0",
+    "laminas/captcha": ">=2.5.0",
+    "laminas/form": ">=2.5.0"
   }
 }
