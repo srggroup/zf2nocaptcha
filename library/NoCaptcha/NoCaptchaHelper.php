@@ -1,4 +1,5 @@
 <?php
+
 namespace NoCaptcha;
 
 use Laminas\Captcha\AdapterInterface;
@@ -10,20 +11,18 @@ use Laminas\Form\Exception;
 /**
  * Class ReCaptcha
  *
- * @link https://github.com/srggroup/ZF2NoCaptcha
+ * @link    https://github.com/srggroup/ZF2NoCaptcha
  * @package NoCaptcha
  * @author  Adam Balint <adam.balint@srg.hu>
  */
-class NoCaptchaHelper extends FormInput
-{
+class NoCaptchaHelper extends FormInput {
 
 	/**
-	 * @param ElementInterface $element
+	 * @param ElementInterface|null $element
 	 *
 	 * @return $this|string|FormInput
 	 */
-	public function __invoke(ElementInterface $element = null)
-	{
+	public function __invoke(ElementInterface $element = null) {
 		if (!$element) {
 			return $this;
 		}
@@ -37,8 +36,7 @@ class NoCaptchaHelper extends FormInput
 	 *
 	 * @return string
 	 */
-	public function render(ElementInterface $element)
-	{
+	public function render(ElementInterface $element): string {
 		$captcha = $element->getCaptcha();
 
 		if ($captcha === null || !$captcha instanceof AdapterInterface) {
@@ -50,32 +48,33 @@ class NoCaptchaHelper extends FormInput
 
 		$name = $element->getName();
 		$id = $element->getAttribute('id') ? $element->getAttribute('id') : $name;
-		$id .= '_'.uniqid(); //Generate unique ID for field
+		$id .= '_' . uniqid(); //Generate unique ID for field
 
 		$captchaPattern = '<div %s></div>';
 
 		$captchaAttributes = [
-			'class' => 'g-recaptcha '.$element->getAttribute('class'),
-			'data-sitekey' => $captcha->getSiteKey(),
-			'data-theme' => $captcha->getTheme(),
-			'data-type' => $captcha->getType(),
+			'class'         => 'g-recaptcha ' . $element->getAttribute('class'),
+			'data-sitekey'  => $captcha->getSiteKey(),
+			'data-theme'    => $captcha->getTheme(),
+			'data-type'     => $captcha->getType(),
 			'data-callback' => $captcha->getCallback(),
-			'id' => $id
+			'id'            => $id
 		];
 
 		//Invisible recaptcha support
-		if($captcha->isInvisible()){
+		if ($captcha->isInvisible()) {
 			$captchaAttributes['data-size'] = 'invisible';
 		}
 		$captchaAttributes = $this->createAttributesString($captchaAttributes);
 
 
 		$captchaElement = sprintf($captchaPattern, $captchaAttributes);
-		$input = $this->renderHiddenInput($id.'_input', $name);
-		$js = $this->renderJsCallback($captcha->getCallback(), $id.'_input');
+		$input = $this->renderHiddenInput($id . '_input', $name);
+		$js = $this->renderJsCallback($captcha->getCallback(), $id . '_input');
 
 		return $captchaElement . $input . $js;
 	}
+
 
 	/**
 	 * @param $id
@@ -83,19 +82,19 @@ class NoCaptchaHelper extends FormInput
 	 *
 	 * @return string
 	 */
-	protected function renderHiddenInput($id, $name)
-	{
+	protected function renderHiddenInput($id, $name) {
 		$pattern = '<input type="hidden" %s%s';
 		$closingBracket = $this->getInlineClosingBracket();
 
-		$attributes = $this->createAttributesString(array(
-			'id' =>  $id,
-			'name' => $name,
-            'class' => 'recaptchaResponse',
-		));
+		$attributes = $this->createAttributesString([
+			'id'    => $id,
+			'name'  => $name,
+			'class' => 'recaptchaResponse',
+		]);
 
 		return sprintf($pattern, $attributes, $closingBracket);
 	}
+
 
 	/**
 	 * @param $callback
@@ -103,11 +102,10 @@ class NoCaptchaHelper extends FormInput
 	 *
 	 * @return string
 	 */
-	protected function renderJsCallback($callback, $id)
-	{
-		$lang=LANG;
-		$js='';
-		$js.=<<<SCRIPT
+	protected function renderJsCallback($callback, $id) {
+		$lang = LANG;
+		$js = '';
+		$js .= <<<SCRIPT
 <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl={$lang}"></script>
 SCRIPT;
 
