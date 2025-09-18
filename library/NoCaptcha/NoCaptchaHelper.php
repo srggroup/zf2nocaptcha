@@ -8,21 +8,13 @@ use Laminas\Form\ElementInterface;
 use Laminas\Form\Exception;
 
 
-/**
- * Class ReCaptcha
- *
- * @link    https://github.com/srggroup/ZF2NoCaptcha
- * @package NoCaptcha
- * @author  Adam Balint <adam.balint@srg.hu>
- */
 class NoCaptchaHelper extends FormInput {
 
+
 	/**
-	 * @param ElementInterface|null $element
-	 *
 	 * @return $this|string|FormInput
 	 */
-	public function __invoke(ElementInterface $element = null) {
+	public function __invoke(?ElementInterface $element = null) {
 		if (!$element) {
 			return $this;
 		}
@@ -31,11 +23,6 @@ class NoCaptchaHelper extends FormInput {
 	}
 
 
-	/**
-	 * @param ElementInterface $element
-	 *
-	 * @return string
-	 */
 	public function render(ElementInterface $element): string {
 		$captcha = $element->getCaptcha();
 
@@ -47,7 +34,7 @@ class NoCaptchaHelper extends FormInput {
 		}
 
 		$name = $element->getName();
-		$id = $element->getAttribute('id') ? $element->getAttribute('id') : $name;
+		$id = $element->getAttribute('id') ?: $name;
 		$id .= '_' . uniqid(); //Generate unique ID for field
 
 		$captchaPattern = '<div %s></div>';
@@ -58,7 +45,7 @@ class NoCaptchaHelper extends FormInput {
 			'data-theme'    => $captcha->getTheme(),
 			'data-type'     => $captcha->getType(),
 			'data-callback' => $captcha->getCallback(),
-			'id'            => $id
+			'id'            => $id,
 		];
 
 		//Invisible recaptcha support
@@ -76,13 +63,7 @@ class NoCaptchaHelper extends FormInput {
 	}
 
 
-	/**
-	 * @param $id
-	 * @param $name
-	 *
-	 * @return string
-	 */
-	protected function renderHiddenInput($id, $name) {
+	protected function renderHiddenInput(string $id, string $name): string {
 		$pattern = '<input type="hidden" %s%s';
 		$closingBracket = $this->getInlineClosingBracket();
 
@@ -96,13 +77,7 @@ class NoCaptchaHelper extends FormInput {
 	}
 
 
-	/**
-	 * @param $callback
-	 * @param $id
-	 *
-	 * @return string
-	 */
-	protected function renderJsCallback($callback, $id) {
+	protected function renderJsCallback(string $callback, string $id): string {
 		$lang = LANG;
 		$js = '';
 		$js .= <<<SCRIPT
@@ -121,5 +96,6 @@ SCRIPT;
 		return $js;
 
 	}
+
 
 }

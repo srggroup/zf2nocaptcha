@@ -1,86 +1,66 @@
 <?php
+
+declare(strict_types=1);
+
 namespace NoCaptcha;
 
-use ReCaptcha\ReCaptcha;
+use Exception;
 use Laminas\Captcha\AbstractAdapter;
+use ReCaptcha\ReCaptcha;
 
+class NoCaptchaAdapter extends AbstractAdapter {
 
-/**
- * Class NoCaptchaAdapter
- *
- * @package NoCaptcha
- * @author Adam Balint <adam.balint@srg.hu>
- */
-class NoCaptchaAdapter extends AbstractAdapter
-{
 
 	/**
-	 * @var ReCaptcha
+	 * Error codes
 	 */
-	protected $service;
+	public const string MISSING_VALUE = 'missingValue';
+	public const string ERR_CAPTCHA   = 'errCaptcha';
 
-	/**
-	 * @var string
-	 */
-	protected $siteKey;
 
-	/**
-	 * @var string
-	 */
-	protected $secretKey;
+	protected ReCaptcha $service;
+
+	protected string $siteKey;
+
+	protected string $secretKey;
 
 	/**
 	 * light | dark
-	 *
-	 * @var string
 	 */
-	protected $theme = 'light';
+	protected string $theme = 'light';
 
 	/**
 	 * image | audio
-	 *
-	 * @var string
 	 */
-	protected $type = 'image';
+	protected string $type = 'image';
 
-	/**
-	 * @var string
-	 */
-	protected $callback = 'recaptchaCallback';
+	protected string $callback = 'recaptchaCallback';
 
-	/**
-	 * @var boolean Invisible ReCaptcha, or v2
-	 */
-	protected $invisible = false;
+	/** @var bool Invisible ReCaptcha, or v2 */
+	protected bool $invisible = false;
 
 	/**
 	 * See the different options on https://developers.google.com/recaptcha/docs/display
 	 *
 	 * @var array
 	 */
-	protected $options = array();
-
-	/**
-	 * Error codes
-	 */
-	const MISSING_VALUE = 'missingValue';
-	const ERR_CAPTCHA   = 'errCaptcha';
+	protected $options = [];
 
 	/**
 	 * Error messages
+	 *
 	 * @var array
 	 */
-	protected $messageTemplates = array(
+	protected $messageTemplates = [
 		self::MISSING_VALUE => 'Missing captcha fields',
 		self::ERR_CAPTCHA   => 'Failed to validate captcha',
-	);
+	];
 
 
 	/**
 	 * @param null $options
 	 */
-	public function __construct($options = null)
-	{
+	public function __construct($options = null) {
 
 		parent::__construct($options);
 
@@ -95,129 +75,80 @@ class NoCaptchaAdapter extends AbstractAdapter
 		}
 
 		$this->setService(new ReCaptcha($this->getSecretKey()));
-
 	}
 
-	/**
-	 * @param $siteKey
-	 *
-	 * @return $this
-	 */
-	public function setSiteKey($siteKey)
-	{
-		$this->siteKey=$siteKey;
+
+	public function setSiteKey(string $siteKey): static {
+		$this->siteKey = $siteKey;
+
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getSiteKey()
-	{
+
+	public function getSiteKey(): string {
 		return $this->siteKey;
 	}
 
-	/**
-	 * @param $secretKey
-	 *
-	 * @return $this
-	 */
-	public function setSecretKey($secretKey)
-	{
-		$this->secretKey=$secretKey;
+
+	public function setSecretKey(string $secretKey): static {
+		$this->secretKey = $secretKey;
+
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getSecretKey()
-	{
+
+	public function getSecretKey(): string {
 		return $this->secretKey;
 	}
 
-	/**
-	 * @return ReCaptcha
-	 */
-	public function getService()
-	{
+
+	public function getService(): ReCaptcha {
 		return $this->service;
 	}
 
 
-	/**
-	 * @param ReCaptcha $service
-	 *
-	 * @return ReCaptcha
-	 */
-	public function setService(ReCaptcha $service)
-	{
+	public function setService(ReCaptcha $service): ReCaptcha {
 		return $this->service = $service;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getCallback()
-	{
+
+	public function getCallback(): string {
 		return $this->callback;
 	}
 
-	/**
-	 * @param string $callback
-	 *
-	 * @return $this
-	 */
-	public function setCallback($callback)
-	{
+
+	public function setCallback(string $callback): static {
 		$this->callback = $callback;
+
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getTheme()
-	{
+
+	public function getTheme(): string {
 		return $this->theme;
 	}
 
-	/**
-	 * @param string $theme
-	 *
-	 * @return $this
-	 */
-	public function setTheme($theme)
-	{
+
+	public function setTheme(string $theme): static {
 		$this->theme = $theme;
+
 		return $this;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getType()
-	{
+
+	public function getType(): string {
 		return $this->type;
 	}
 
-	/**
-	 * @param string $type
-	 *
-	 * @return $this
-	 */
-	public function setType($type)
-	{
+
+	public function setType(string $type): static {
 		$this->type = $type;
+
 		return $this;
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function generate()
-	{
+	public function generate(): string {
 		return "";
 	}
 
@@ -226,14 +157,12 @@ class NoCaptchaAdapter extends AbstractAdapter
 	 * Check if captcha is valid
 	 *
 	 * @param mixed $value
-	 *
-	 * @return bool
-	 * @throws \Exception
+	 * @throws Exception
 	 */
-	public function isValid($value)
-	{
+	public function isValid($value): bool {
 		if (!$value) {
 			$this->error(self::MISSING_VALUE);
+
 			return false;
 		}
 
@@ -244,33 +173,24 @@ class NoCaptchaAdapter extends AbstractAdapter
 		}
 
 		$this->error(self::ERR_CAPTCHA);
+
 		return false;
 	}
 
-	/**
-	 * Get helper name
-	 *
-	 * @return string
-	 */
-	public function getHelperName()
-	{
+
+	public function getHelperName(): string {
 		return 'recaptcha.helper';
 	}
 
-	/**
-	 * Check if invisible recaptcha
-	 * @return bool
-	 */
-	public function isInvisible() {
+
+	public function isInvisible(): bool {
 		return $this->invisible;
 	}
 
-	/**
-	 * Set invisible flag
-	 * @param bool $invisible
-	 */
-	public function setInvisible($invisible){
+
+	public function setInvisible(bool $invisible): void {
 		$this->invisible = $invisible;
 	}
+
 
 }
