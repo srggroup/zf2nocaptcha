@@ -78,6 +78,7 @@ class NoCaptchaHelper extends FormInput {
 
 
 	protected function renderJsCallback(string $callback, string $id): string {
+		defined('LANG') || define('LANG', 'en');
 		$lang = LANG;
 		$js = '';
 		$js .= <<<SCRIPT
